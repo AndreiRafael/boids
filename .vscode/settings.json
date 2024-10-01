@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "stb_image.h": "c",
+        "utility": "c",
+        "xutility": "c",
+        "compare": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "xmemory": "c",
+        "xtr1common": "c",
+        "ow.h": "c",
+        "iterator": "c"
+    },
+    "cmake.debugConfig": {
+        "args": [
+            "./tuber.png",
+        ]
+    }
+}

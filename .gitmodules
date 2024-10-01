@@ -1,0 +1,3 @@
+[submodule "ext/hf_lib"]
+	path = ext/hf_lib
+	url = https://github.com/AndreiRafael/hf_lib.git

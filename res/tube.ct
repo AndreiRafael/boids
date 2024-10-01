@@ -1,0 +1,11 @@
+resolution 800 800
+layer
+    tex "./tuber.png" uniform_Texture
+    vert "./vert.shader"
+    frag "./frag_talk.shader"
+layer
+    tex "./eyes.png" uniform_Texture
+    position 0 0.5
+    scale 1 1
+    vert "./vert.shader"
+    frag "./frag_blink.shader"
