@@ -9,7 +9,10 @@
         "xmemory": "c",
         "xtr1common": "c",
         "ow.h": "c",
-        "iterator": "c"
+        "iterator": "c",
+        "hf_transform.h": "c",
+        "algorithm": "c",
+        "limits": "c"
     },
     "cmake.debugConfig": {
         "args": [
