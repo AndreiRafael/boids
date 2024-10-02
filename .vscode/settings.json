@@ -18,5 +18,6 @@
         "args": [
             "./tuber.png",
         ]
-    }
+    },
+    "cmake.sourceDirectory": "/home/andrei/Projetos/boids/"
 }

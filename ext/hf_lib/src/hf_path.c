@@ -107,6 +107,7 @@ bool hf_path_valid(const char* path) {
         }
     }
 #elif defined(HF_PATH_UNIX)
+    (void)path;
     return true;// TODO:
 #else
     #error "Unsupported system"

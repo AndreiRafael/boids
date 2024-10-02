@@ -1261,10 +1261,10 @@ static hfe_texture hfe_opengl_texture_create(int w, int h, hfe_texture_pixel_typ
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &prev);
 
     glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, configuration.wrap_x);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, configuration.wrap_y);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, configuration.filter_min);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, configuration.filter_mag);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (GLint)configuration.wrap_x);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, (GLint)configuration.wrap_y);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (GLint)configuration.filter_min);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (GLint)configuration.filter_mag);
 
     glTexImage2D(GL_TEXTURE_2D, 0, (GLint)data_format, w, h, 0, (GLenum)data_format, (GLenum)pixel_type, data);
     glGenerateMipmap(GL_TEXTURE_2D);
