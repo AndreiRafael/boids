@@ -30,7 +30,11 @@ endif()
 target_include_directories(boids PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 target_link_directories(boids PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/sdl2/x64)
-target_link_libraries(boids m SDL2main SDL2 hf_lib glad stb)
+if(WIN32)
+    target_link_libraries(boids SDL2main SDL2 hf_lib glad stb)
+else()
+    target_link_libraries(boids m SDL2main SDL2 hf_lib glad stb)
+endif()
 
 if(WIN32)
     file(COPY ${CMAKE_SOURCE_DIR}/lib/sdl2/x64/SDL2.dll DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
