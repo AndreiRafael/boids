@@ -85,7 +85,12 @@ int main(int argc, char** argv) {
         pos[1] = (float)((rand() % 1001) - 500);
         hf_vec2f_copy(pos, boids[i].position);
 
-        boids[i].id = rand() % 4;
+        if(i >= 3) {
+            boids[i].id = rand() % 4;
+        }
+        else {
+            boids[i].id = 4;
+        }
     }
 
     SDL_GL_SetSwapInterval(1);

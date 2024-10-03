@@ -112,6 +112,54 @@ static void cohesion(boid* b, boid* boids, size_t boids_count, hf_vec2f out_vec)
     hf_vec2f_subtract(mid, b->position, out_vec);
 }
 
+static void hunt(boid* b, boid* boids, size_t boids_count, hf_vec2f out_vec) {
+    boid neighbors[BOIDS_MAX_NEIGHBORS];
+    size_t neighbors_count;
+    boid_get_neighbors(b, boids, boids_count, 11.f, neighbors, &neighbors_count);
+
+    hf_vec2f mid;
+    size_t c = 0;
+    for(size_t i = 0; i < neighbors_count; i++) {
+        boid* other = &neighbors[i];
+        if(other->id != b->id) {
+            hf_vec2f_add(mid, other->position, mid);
+            c++;
+        }
+    }
+
+    if(c) {
+        hf_vec2f_divide(mid, (float)c, mid);
+    }
+    else {
+        hf_vec2f_copy(b->position, mid);
+    }
+
+    hf_vec2f_subtract(mid, b->position, out_vec);
+}
+
+static void flee(boid* b, boid* boids, size_t boids_count, hf_vec2f out_vec) {
+    boid neighbors[BOIDS_MAX_NEIGHBORS];
+    size_t neighbors_count;
+    boid_get_neighbors(b, boids, boids_count, 10.f, neighbors, &neighbors_count);
+
+    hf_vec2f_copy((hf_vec2f) { 0 }, out_vec);
+    size_t c = 0;
+    for(size_t i = 0; i < neighbors_count; i++) {
+        boid* other = &neighbors[i];
+        if(other->id == 4) {
+            hf_vec2f from_other;
+            hf_vec2f_subtract(b->position, other->position, from_other);
+            hf_vec2f_normalize(from_other, from_other);
+            hf_vec2f_add(out_vec, from_other, out_vec);
+            c++;
+        }
+    }
+
+    if(c) {
+        hf_vec2f_divide(out_vec, (float)c, out_vec);
+    }
+}
+
 static void apply_func(boid* b, boid* boids, size_t boids_count, void(*func)(boid*, boid*, size_t, hf_vec2f), float intensity) {
     hf_vec2f res = { 0 };
     func(b, boids, boids_count, res);
@@ -126,6 +174,15 @@ void boids_update(boid* boids, size_t boids_count, float delta) {
         apply_func(b, boids, boids_count, separation, 4.f);
         apply_func(b, boids, boids_count, alignment, .8f);
         apply_func(b, boids, boids_count, cohesion, 0.5f);
+        if(b->id == 4) {
+            apply_func(b, boids, boids_count, hunt, 5.f);
+        }
+        else {
+            apply_func(b, boids, boids_count, flee, 5.f);
+        }
+    }
+    for(size_t i = 0; i < boids_count; i++) {
+        boid* b = &boids[i];
 
         hf_vec2f delta_acc;
         hf_vec2f_multiply(b->acceleration, delta * 2.f, delta_acc);
@@ -161,10 +218,11 @@ void boids_update(boid* boids, size_t boids_count, float delta) {
 }
 
 static hf_vec3f colors[] = {
-    { 1.f, 1.f, 1.f },
     { 0.f, 0.f, 0.f },
-    { .7f, .2f, 0.f },
-    { .5f, .5f, .5f },
+    { .3f, .3f, .3f },
+    { .7f, .7f, .7f },
+    { 1.f, 1.f, 1.f },
+    { 1.f, .2f, .2f },
 };
 
 void boids_draw(boid* boids, size_t size, hfe_mesh mesh) {
